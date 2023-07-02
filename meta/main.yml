@@ -1,16 +1,15 @@
----
 
 dependencies: []
 
 galaxy_info:
-  role_name: 'rke2'
+  role_name: 'os_baseconfig'
   namespace: torbencarstens
   author: 'Torben Carstens'
-  description: 'Install rke2'
+  description: 'configure os for rke2'
   min_ansible_version: 6.4.0
   platforms:
-    - name: Debian
-      versions:
-        - bullseye
+  - name: Debian
+    versions:
+    - bullseye
   galaxy_tags: []
   license: MIT

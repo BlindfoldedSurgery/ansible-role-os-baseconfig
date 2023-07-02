@@ -1,35 +1,38 @@
----
-- name: Create directories
-  ansible.builtin.file:
-      path: "{{ item }}"
-      state: directory
-      owner: root
-      group: root
-      mode: "0700"
-  with_items:
-      - "/etc/rancher/rke2"
-      - "{{ etcd.snapshot.dir }}"
+- name: "Configure iptables common"
+  iptables:
+    chain: INPUT
+    jump: ACCEPT
+    protocol: tcp
+    in_interface: eth0
+    destination_port: "{{ item }}"
+  loop:
+  - "53"
+  - "80"
+  - "443"
+  - "6443"
+  - "10250"
+  - "10254"
 
-- name: Use rke2-cis-sysctl for rke2 service
-  ansible.builtin.copy:
-      src: "/usr/local/share/rke2/rke2-cis-sysctl.conf"
-      dest: "/etc/sysctl.d/60-rke2-cis.conf"
-      mode: '0644'
-      remote_src: true
-  notify: restart sysctl
+- name: "Configure iptables for masters"
+  iptables:
+    # chain: IN_public_allow
+    chain: INPUT
+    jump: ACCEPT
+    protocol: tcp
+    in_interface: eth0
+    destination_port: "{{ item }}"
+  when: "'master' in group_names"
+  loop:
+  - "2379"
+  - "2380"
 
-- name: Flush handlers
-  ansible.builtin.meta: flush_handlers
-
-- name: Create etcd group
-  ansible.builtin.group:
-      name: etcd
-      state: present
-
-- name: Create etcd user
-  ansible.builtin.user:
-      name: etcd
-      group: etcd
-      system: true
-      shell: /sbin/nologin
-      create_home: false
+- name: "Configure iptables for all"
+  iptables:
+    # chain: IN_public_allow
+    chain: INPUT
+    jump: ACCEPT
+    protocol: tcp
+    source: "{{ item }}"
+  loop:
+  - "10.0.0.0/8"
+  - "162.55.58.163/32"
