@@ -3,7 +3,7 @@ repos:
     hooks:
       - id: lint
         name: ansible-lint
-        entry: /bin/bash -c "ansible-lint plays/"
+        entry: /bin/bash -c "ansible-lint ** --strict"
         language: script
         types:
           - "yaml"
