@@ -1,6 +1,5 @@
-
 - name: Configure nodes for rke2
   ansible.builtin.import_tasks: configuration.yml
   tags:
-  - os:config
+    - os:config
   become: true

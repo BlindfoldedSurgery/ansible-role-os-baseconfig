@@ -1,20 +1,20 @@
 - name: "Configure iptables common"
-  iptables:
+  ansible.builtin.iptables:
     chain: INPUT
     jump: ACCEPT
     protocol: tcp
     in_interface: eth0
     destination_port: "{{ item }}"
   loop:
-  - "53"
-  - "80"
-  - "443"
-  - "6443"
-  - "10250"
-  - "10254"
+    - "53"
+    - "80"
+    - "443"
+    - "6443"
+    - "10250"
+    - "10254"
 
 - name: "Configure iptables for masters"
-  iptables:
+  ansible.builtin.iptables:
     # chain: IN_public_allow
     chain: INPUT
     jump: ACCEPT
@@ -23,15 +23,15 @@
     destination_port: "{{ item }}"
   when: "'master' in group_names"
   loop:
-  - "2379"
-  - "2380"
+    - "2379"
+    - "2380"
 
 - name: "Configure iptables for all"
-  iptables:
+  ansible.builtin.iptables:
     # chain: IN_public_allow
     chain: INPUT
     jump: ACCEPT
     protocol: tcp
     source: "{{ item }}"
   loop:
-  - "10.0.0.0/8"
+    - "10.0.0.0/8"

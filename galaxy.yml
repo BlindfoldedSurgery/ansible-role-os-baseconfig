@@ -1,0 +1,15 @@
+namespace: "blindfoldedsurgery"
+name: "ansible_role_os_baseconfig"
+description: "Role to configure an ubuntu os to install rke2 on"
+
+version: "1.0.0"
+readme: "README.md"
+authors:
+  - "Torben Carstens"
+license:
+  - "MIT"
+tags:
+  - "infrastructure"
+  - "linux"
+  - "cloud"
+repository: "https://github.com/BlindfoldedSurgery/ansible-role-os-baseconfig"
