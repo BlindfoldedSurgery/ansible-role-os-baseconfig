@@ -10,7 +10,7 @@
         "patch"
       ],
       "matchManagers": [
-        "galaxy-collection"
+        "ansible-galaxy"
       ],
       "matchDepNames": [
         "community.general"
